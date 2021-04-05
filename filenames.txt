@@ -1,1 +1,0 @@
-/Users/sakshamramkhatod/Downloads/demo-final/inputs/input.png,/Users/sakshamramkhatod/Downloads/demo-final/outputs/output.mat

@@ -1,6 +1,7 @@
 import tensorflow.compat.v1 as tf
 
 FLAGS = tf.flags.FLAGS
+tf.app.flags.DEFINE_string('home_path', '/Users/sakshamramkhatod/Downloads/demo-final/','''Home Path''')
 tf.app.flags.DEFINE_integer(
     'input_image_channels', 3, 
     """Number of channels in the input image.""")

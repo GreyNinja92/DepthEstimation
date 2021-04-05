@@ -1,6 +1,5 @@
 import tensorflow.compat.v1 as tf
 import config as cfg
-import cv2
 
 def findImages(input_path, output_path):
     image_contents = tf.read_file(input_path)

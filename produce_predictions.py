@@ -6,9 +6,9 @@ import config as cfg
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+import time
 
 def main(argv=None):
-    while iterator.
     with tf.Graph().as_default():
         iterator, iterator_init = inputs.generate_iterator(cfg.FLAGS.filenames_path)
         next_image, outputPath = iterator.get_next()
@@ -25,19 +25,26 @@ def main(argv=None):
         sess = tf.Session()
         sess.run([tf.global_variables_initializer(), iterator_init])
         restorePreviousState.restore(sess, cfg.FLAGS.chkpt_path)
-        outputPred, outputName, _sh = sess.run([prediction, outputPath, shape])
 
-        o = outputName[0]
-        sio.savemat(o, {'data': outputPred})
-        print("___________")
-        print(outputPred)
-        print("___________")
-        print(outputPath)
-        plt.imshow(outputPred[0], cmap='gray')
-        im = Image.fromarray(np.squeeze((np.interp(outputPred[0], (outputPred[0].min(), outputPred[0].max()), (0, +255))).astype(np.uint8), axis=2))
-        #im = Image.fromarray(outputPred.astype(np.uint8))
-        im.save('/Users/sakshamramkhatod/Downloads/demo-final/outputs/output.png', format='png')
-        plt.show()
+        while True:
+            try:
+                outputPred, outputName, _sh = sess.run([prediction, outputPath, shape])
+
+                o = outputName[0]
+                sio.savemat(o, {'data': outputPred})
+                print("___________")
+                print(outputPred)
+                print("___________")
+                #plt.imshow(outputPred[0], cmap='gray')
+                im = Image.fromarray(np.squeeze((np.interp(outputPred[0], (outputPred[0].min(), outputPred[0].max()), (0, +255))).astype(np.uint8), axis=2))
+                #im = Image.fromarray(outputPred.astype(np.uint8))
+                im.save(outputName[0].decode('UTF-8'), format='png')
+            except Exception as e:
+                if e.message.find("End of sequence") != -1:
+                    print("Finished")
+                else:
+                    print(str(e))
+                break
 
 if __name__ == '__main__':
     tf.app.run()
