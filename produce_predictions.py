@@ -30,14 +30,13 @@ def main(argv=None):
             try:
                 outputPred, outputName, _sh = sess.run([prediction, outputPath, shape])
 
-                o = outputName[0]
-                sio.savemat(o, {'data': outputPred})
+                o = outputName[0][:-4] + str.encode('mat')
+                #sio.savemat(o, {'data': outputPred})
                 print("___________")
                 print(outputPred)
                 print("___________")
-                #plt.imshow(outputPred[0], cmap='gray')
+                #plt.imshow(mat)
                 im = Image.fromarray(np.squeeze((np.interp(outputPred[0], (outputPred[0].min(), outputPred[0].max()), (0, +255))).astype(np.uint8), axis=2))
-                #im = Image.fromarray(outputPred.astype(np.uint8))
                 im.save(outputName[0].decode('UTF-8'), format='png')
             except Exception as e:
                 if e.message.find("End of sequence") != -1:

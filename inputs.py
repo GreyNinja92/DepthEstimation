@@ -14,6 +14,7 @@ def readDirectories(filenames_path):
     l_in = []
     l_out = []
     for line in f:
+        print(line)
         i_name, o_name = line[:].split(',')
 
         if not tf.gfile.Exists(i_name):
